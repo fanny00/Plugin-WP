@@ -1,0 +1,178 @@
+@mixin breakpoint($consulta){
+    $media-xs: "(max-width: 575.98px)"; //Movil
+    $media-sm: "(min-width: 576px) and (max-width: 767.98px)"; //movil up tablet
+    $media-md: "(min-width: 768px) and (max-width: 991.98px)";
+    $media-lg: "(min-width: 992px) and (max-width: 1199.98px)";
+    $media-xl: "(min-width: 1200px)";
+
+    @if $consulta == xs {
+        @media #{$media-xs} {@content;}
+    }
+    //Importante, apartir del segundo if deben ser else if
+    @else if $consulta == sm {
+        @media #{$media-sm} {@content;}
+    }
+    @else if $consulta == md {
+        @media #{$media-md} {@content;}
+    }
+    @else if $consulta == lg {
+        @media #{$media-lg} {@content;}
+    }
+    @else if $consulta == xl {
+        @media #{$media-xl} {@content;}
+    }
+}
+
+@mixin breakpoint-max-width($consulta){
+    $media-xs: "screen and (max-width: 0px)";
+    $media-sm: "screen and (max-width: 576px)";
+    $media-md: "screen and (max-width: 768px)";
+    $media-lg: "screen and (max-width: 992px)";
+    $media-xl: "screen and (max-width: 1200px)";
+
+    @if $consulta == xs {
+        @media #{$media-xs} {@content;}
+    }
+    @else if $consulta == sm {
+        @media #{$media-sm} {@content;}
+    }
+    @else if $consulta == md {
+        @media #{$media-md} {@content;}
+    }
+    @else if $consulta == lg {
+        @media #{$media-lg} {@content;}
+    }
+    @else if $consulta == xl {
+        @media #{$media-xl} {@content;}
+    }
+
+}
+
+@mixin encabezado($font-size, $font-family, $color-barras, $color-subtitle){
+    h3,h4{
+        font-size: $font-size;
+        text-align: center;
+        text-transform: uppercase;
+        font-weight: bold;
+        font-family: $font-family;
+    }
+    h3:nth-child(2){
+        color: $color-subtitle;
+        font-weight: 400;
+    }
+    p{
+        text-align: center;
+        margin-top: 60px;
+    }
+    .separador_1{
+        border: 2px solid $color-barras;
+        width: 200px;
+    }
+    .separador_2{
+        border: 1px solid $color-barras;
+        width: 150px;
+    }
+
+    .boton-container{
+        width: 100%;
+        text-align: center;
+        .boton-view{
+            text-transform: uppercase;
+            margin-top: 30px;
+        }
+    }
+}
+
+@mixin sombra(){
+
+    position: absolute;
+    width: 93%;
+    height: 100%;
+    background-color: #0f0f19;
+    opacity: 0.7;
+    display: none;
+    transition: all ease-in 0.5s;
+    @include breakpoint(xs){
+        width: 87%;
+    }
+    a{
+        color: $white;
+        font-size: 18px;
+        font-weight: bold;
+        line-height: 200px;
+        position: absolute;
+        transition: all ease-in 0.5s;
+        @include breakpoint(xs){
+            line-height: 120px;
+        }
+    }
+    &:hover{
+        a{
+            font-size: 32px;
+        }
+    }
+}
+@mixin modalgallery(){
+
+    .modal-galeria {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        padding-top: 100px; /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.6); /* Black w/ opacity */
+        
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 50%;
+            height: auto;
+            @include breakpoint(xs){
+                width: 90%;
+            }
+            @include breakpoint(sm){
+                width: 80%;
+            }
+            
+            //Es obligatorio poner atributos a la etiqueta de imagen
+            img{
+                width: 100%;
+                max-width: 600px;
+                text-align: center;
+                //Con este css creo una animacion llamada zoom para la imagen
+                animation-name: zoom;
+                animation-duration: 0.6s;
+            }
+            .close {
+                color: #000000;
+                float: right;
+                font-size: 28px;
+                font-weight: bold;
+                &:hover{
+                    color: rgb(119, 126, 121);
+                    text-decoration: none;
+                    cursor: pointer;
+                }
+                &:focus{
+                    color: rgb(32, 185, 65);
+                    text-decoration: none;
+                    cursor: pointer;
+                }
+              }
+        }
+        //este es el animate zoom de la imagen, de la posicion 0 a 1, osea de no mostrarse 
+        //hasta mostrarse tardara 0.6segundos
+        @keyframes zoom {
+            from{transform: scale(0)}
+            to{transform: scale(1)}
+        }
+    }
+}
+
