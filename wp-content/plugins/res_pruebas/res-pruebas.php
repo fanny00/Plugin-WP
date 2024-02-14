@@ -291,26 +291,118 @@ add_shortcode( 'reslink', 'res_shortcode_link_personalizado' );
  add_filter( 'the_content', 'filter_the_content_in_the_main_loop' );
 
 
-function res_function_setting(){
-
-   // Registrando una nueva funcipin en la pagina Ajustes - Generales
-   register_setting('general', 'res_primera_configuración' );
-
-   add_settings_section(
-      'res_config_seccion', 
-      'Mi primera configuración', 
-      'res_config_seccion_cb', 
+ function res_funcion_setting(){
+   //Registrando una nueva función en la pagina general
+      register_setting('general', 'res_primera_configuracion');
+      //Registrando una nueva sección en la pagina general
+      add_settings_section(
+      'res_config_seccion',
+      'Mi primera configuración',
+      'res_config_seccion_cb',
       'general'
-   );
+      );
 
-}
+      add_settings_field(
+         'res_config_campo1',
+         'Configuración Campo 1',
+         'res_config_campo_cb1',
+         'general',
+         //string id del settings_section
+         'res_config_seccion',
+         //6º parametro array asociativo
+         [
+         'label_for' => 'res_campo_1',
+         'class' => 'clase_campo',
+         'res_dato_personalizado' => 'valor personalizado'
+         ]
+      );
 
-add_action( 'admin_init', 'res_function_setting' );
+      add_settings_field(
+         'res_config_campo2',
+         'Configuración Campo 2',
+         'res_config_campo_cb2',
+         'general',
+         //string id del settings_section
+         'res_config_seccion',
+         //6º parametro array asociativo
+         [
+            'label_for' => 'res_campo_2',
+            'class' => 'clase_campo',
+            'res_dato_personalizado' => 'valor personalizado'
+         ]
+      );
+  }
 
-function res_config_seccion_cb(){
+   add_action( 'admin_init', 'res_funcion_setting' );
+
+   // Función callback sección
+   function res_config_seccion_cb(){
+      echo "<p>Mi Primer ajuste de configuración</p>";
+   }
+
+
+   // Función callback campo 1
+   function res_config_campo_cb1( $args ){
+
+      $resconfig = get_option( 'res_primera_configuracion' );
+      $valor = isset( $resconfig[$args['label_for']] ) ? esc_attr( $resconfig[$args['label_for']] ) : '';
+
+      $html = "<input class='{$args['class']}' data-custom='{$args['res_dato_personalizado']}' type='text' name='res_primera_configuracion[{$args['label_for']}]' value='$valor'>";
+      echo $html;
+
+   }
+
+   // Función callback campo 2
+   function res_config_campo_cb2( $args ){
+
+      $resconfig = get_option( 'res_primera_configuracion' );
+      $valor = isset( $resconfig[$args['label_for']] ) ? esc_attr( $resconfig[$args['label_for']]) : '';
+
+      $html = "<input class='{$args['class']}' data-custom='{$args['res_dato_personalizado']}' type='text' name='res_primera_configuracion[{$args['label_for']}]' value='$valor'>";
+      echo $html;
+   }
+
+   $valor = "color rojo";
+
+ //  add_option( 'atr_valor_personalizado_01', $valor );
+
+   $valor = [
+      'rojo',
+      'verde',
+      'azul',
+      'Titulo' => 'colores principales'
+   ];
+
+  // add_option( 'atr_valor_personalizado_02', $valor );
+
+   $opcion_personalizada1 = get_option( 'atr_valor_personalizado_01' );
+
+   echo "$opcion_personalizada1 <br>";
+
+   $opcion_personalizada2 = get_option('atr_valor_personalizado_02');
+
+ //  var_dump( $opcion_personalizada2 );
+
+   $valor_nuevo = 'Este es el nuevo valor';
+   update_option( 'atr_valor_personalizado_01', $valor_nuevo );
+
+   delete_option('atr_valor_personalizado_02');
+
+   delete_option('atr_valor_personalizado_01');
+
+/*function res_config_seccion_cb(){
    echo "<p>Mi primer ajuste de configuración</p>";
-}
+}*/
 
+//Función callback campo
+/*function res_config_campo1_cb1(){
+   $resconfig = get_option( 'res_primera_configuracion' );
+   $resconfig = isset( $resconfig ) ? esc_attr( $resconfig ) : '';
+
+   $html = "<input type='text' name='res_primera_configuracion' value='$resconfig'>";
+   echo $html;
+
+}*/
 
 
 
