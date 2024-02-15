@@ -24,3 +24,5 @@ function res_desactivador(){
 }
 
 register_activation_hook(__FILE__, 'res_desactivador');
+
+require_once 'partials/res-menu.php';
