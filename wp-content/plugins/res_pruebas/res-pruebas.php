@@ -294,6 +294,7 @@ add_shortcode( 'reslink', 'res_shortcode_link_personalizado' );
  function res_funcion_setting(){
    //Registrando una nueva función en la pagina general
       register_setting('general', 'res_primera_configuracion');
+     
       //Registrando una nueva sección en la pagina general
       add_settings_section(
       'res_config_seccion',
@@ -374,6 +375,7 @@ add_shortcode( 'reslink', 'res_shortcode_link_personalizado' );
    ];
 
   // add_option( 'atr_valor_personalizado_02', $valor );
+ 
 
    $opcion_personalizada1 = get_option( 'atr_valor_personalizado_01' );
 
