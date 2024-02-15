@@ -12,3 +12,5 @@
   * Bases de datos, limpiar caché, limpiar enlaces permanentes, etc ...
   * en la desinstalación del plugin
   */
+
+  

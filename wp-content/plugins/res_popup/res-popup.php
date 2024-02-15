@@ -25,4 +25,9 @@ function res_desactivador(){
 
 register_activation_hook(__FILE__, 'res_desactivador');
 
+// Menú de opciones
 require_once 'partials/res-menu.php';
+
+// Encolamiento de archivos
+require_once 'partials/res-archivos.php';
+
