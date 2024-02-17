@@ -1,0 +1,59 @@
+/*Modal preview*/
+#modalPreviewPublic .modal-content .class-imgFondo{
+    width: 100%;
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+#modalPreviewPublic .modal-content{
+    border-radius: 10px;
+}
+#modalPreviewPublic .btn-close{
+    text-shadow: none;
+    opacity: 1;
+    color: #fff;
+    font-size: 15px;
+    width: 15px;
+    height: 15px;
+    background-color: #000;
+    border-radius: 180px;
+    font-weight: bold;
+}
+#modalPreviewPublic .btn-close span{
+    display: flex;
+    flex-direction: column;
+    margin-top: -5px;
+}
+#modalPreviewPublic .pd-btnclose{
+    padding-right: 30px;
+}
+#modalPreviewPublic .pd-textmodal{
+    padding-right: 30px;
+    padding-left: 20px;
+}
+.btn-callAction .btn-success{
+    color: #fff;
+    background-color: #62bfe3;
+    border-color: #69cae1;
+    border-radius: 40px;
+    padding: 7px 20px;
+}
+.btn-callAction .btn-success:hover{
+    color: #fff;
+    background-color: #84c1ee;
+    border-color: #94c7d6;
+}
+/** Template restaurante **/
+#modalPreviewPublic .content-popup p{
+    box-shadow: none;
+}
+#modalPreviewPublic .btn-close{
+    width: 25px;
+    height: 25px;
+}
+#modalPreviewPublic .content-popup p{
+    padding: 0px 0px;
+}

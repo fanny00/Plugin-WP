@@ -1,8 +1,7 @@
-<?php
+<?php 
 /**
- * Aqui encolamos todos los archivos css y js
+ * Aquí encolaremos todos los archivos css y js
  */
-
 
 function enqueue_style( $hook ){
 
@@ -19,74 +18,79 @@ function enqueue_style( $hook ){
         'all'
     );
 
-    // Encolando la libreria de bootstrap 5
+    //Encolando la libreria de bootstrap 5
     wp_enqueue_style(
-        'bootstrap-css', 
-        plugin_dir_url(__DIR__) . 'helpers/bootstrap-5.3.2/css/bootstrap.min.css', 
-        [], 
-        '5.3.2', 
+        'bootstrap-css',
+        plugin_dir_url( __DIR__ ) . 'helpers/bootstrap-5.0/css/bootstrap.min.css',
+        [],
+        '5.0.0',
         'all'
     );
 
     wp_enqueue_style(
-        'bootstrap-rtl-css', 
-        plugin_dir_url(__DIR__) . 'helpers/bootstrap-5.3.2/css/bootstrap.rtl.min.css', 
-        [], 
-        '5.3.2', 
+        'bootstrap-rtl-css',
+        plugin_dir_url( __DIR__ ) . 'helpers/bootstrap-5.0/css/bootstrap.rtl.min.css',
+        [],
+        '5.0.0',
         'all'
     );
 
     wp_enqueue_style(
-        'bootstrap-grid-css', 
-        plugin_dir_url(__DIR__) . 'helpers/bootstrap-5.3.2/css/bootstrap-grid.min.css', 
-        [], 
-        '5.3.2', 
+        'bootstrap-grid-css',
+        plugin_dir_url( __DIR__ ) . 'helpers/bootstrap-5.0/css/bootstrap-grid.min.css',
+        [],
+        '5.0.0',
         'all'
     );
 
     wp_enqueue_style(
-        'bootstrap-grid-rtl-css', 
-        plugin_dir_url(__DIR__) . 'helpers/bootstrap-5.3.2/css/bootstrap-grid.rtl.min.css', 
-        [], 
-        '5.3.2', 
+        'bootstrap-grid-rtl-css',
+        plugin_dir_url( __DIR__ ) . 'helpers/bootstrap-5.0/css/bootstrap-grid.rtl.min.css',
+        [],
+        '5.0.0',
         'all'
     );
 
     wp_enqueue_style(
-        'bootstrap-reboot-css', 
-        plugin_dir_url(__DIR__) . 'helpers/bootstrap-5.3.2/css/bootstrap-reboot.min.css', 
-        [], 
-        '5.3.2', 
+        'bootstrap-reboot-css',
+        plugin_dir_url( __DIR__ ) . 'helpers/bootstrap-5.0/css/bootstrap-reboot.min.css',
+        [],
+        '5.0.0',
         'all'
     );
 
     wp_enqueue_style(
-        'bootstrap-reboot-rtl-css', 
-        plugin_dir_url(__DIR__) . 'helpers/bootstrap-5.3.2/css/bootstrap-reboot.rtl.min.css', 
-        [], 
-        '5.3.2', 
+        'bootstrap-reboot-rtl-css',
+        plugin_dir_url( __DIR__ ) . 'helpers/bootstrap-5.0/css/bootstrap-reboot.rtl.min.css',
+        [],
+        '5.0.0',
         'all'
     );
 
     wp_enqueue_style(
-        'bootstrap-utilities-css', 
-        plugin_dir_url(__DIR__) . 'helpers/bootstrap-5.3.2/css/bootstrap-utilities.min.css', 
-        [], 
-        '5.3.2', 
+        'bootstrap-utilities-css',
+        plugin_dir_url( __DIR__ ) . 'helpers/bootstrap-5.0/css/bootstrap-utilities.min.css',
+        [],
+        '5.0.0',
         'all'
     );
 
     wp_enqueue_style(
-        'bootstrap-utilities-rtl-css', 
-        plugin_dir_url(__DIR__) . 'helpers/bootstrap-5.3.2/css/bootstrap-utilities.rtl.min.css', 
-        [], 
-        '5.3.2', 
+        'bootstrap-utilities-rtl-css',
+        plugin_dir_url( __DIR__ ) . 'helpers/bootstrap-5.0/css/bootstrap-utilities.rtl.min.css',
+        [],
+        '5.0.0',
         'all'
     );
+
+    /**
+     * Función para utilizar el marco multimedia de wordpress
+     */
+    wp_enqueue_media();
 
 }
+add_action( 'admin_enqueue_scripts', 'enqueue_style' );
 
-add_action('admin_enqueue_scripts', 'enqueue_style');
 
 function enqueue_scripts( $hook ){
 
@@ -106,7 +110,7 @@ function enqueue_scripts( $hook ){
     //Encolando libreria de bootstrap
     wp_enqueue_script(
         'bootstrap-min',
-        plugin_dir_url(__DIR__) . 'helpers/bootstrap-5.3.2/js/bootstrap.min.js',
+        plugin_dir_url(__DIR__) . 'helpers/bootstrap-5.0/js/bootstrap.min.js',
         ['jquery'],
         '5.0.0',
         true
@@ -114,7 +118,7 @@ function enqueue_scripts( $hook ){
 
     wp_enqueue_script(
         'bootstrap-bundle',
-        plugin_dir_url(__DIR__) . 'helpers/bootstrap-5.3.2/js/bootstrap.bundle.min.js',
+        plugin_dir_url(__DIR__) . 'helpers/bootstrap-5.0/js/bootstrap.bundle.min.js',
         ['jquery'],
         '5.0.0',
         true
@@ -144,3 +148,152 @@ function enqueue_scripts( $hook ){
 
 }
 add_action( 'admin_enqueue_scripts', 'enqueue_scripts' );
+
+//Función para recibir el ajax
+function res_data_popup(){
+
+    check_ajax_referer('resdata_seg', 'nonce');
+
+    if( current_user_can('manage_options') ){
+
+        extract( $_POST, EXTR_OVERWRITE );
+
+        if( $tipo == 'add' ){
+
+            if( get_option('res_popup') == null ){
+
+                $args[] = array(
+                    'nombre' => $nombre,
+                    'id' => $id
+                );
+
+                $data = update_option( 'res_popup', $args, true );
+
+                $json = json_encode([
+                    'data' => $data,
+                    'objeto' => $args
+                ]);
+
+            }else if( get_option( 'res_popup' ) != null ){
+
+                $args = array(
+                    'nombre' => $nombre,
+                    'id' => $id
+                );
+
+                $objeto = get_option('res_popup');
+                array_push( $datos_u, $args );
+                $data = update_option( 'res_popup', $datos_u, true );
+
+                $json = json_encode([
+                    'objeto' => $objeto,
+                    'datos_u' => $datos_u,
+                    'id' => $id
+                ]);
+
+            }
+
+        }else if( $tipo == 'delete' ){
+
+            $data = get_option( 'res_popup' );
+
+            //Convertimos el valor $objeto a entero
+            $objeto = (int) $objeto;
+
+            if( is_int($objeto) ){
+
+                unset($data[$objeto]);
+                $update_data = update_option('res_popup', $data, true);
+
+            }
+
+            if( get_option($nombre) != null ){
+
+                $deleteObject = delete_option($nombre);
+
+            }
+
+            $json = json_encode([
+                'objeto' => $objeto,
+                'datos' => $data,
+                'nombre' => $nombre
+            ]);
+
+        }
+
+        echo $json;
+        wp_die();
+
+    }
+    
+}
+add_action( 'wp_ajax_res_data_popup', 'res_data_popup' );
+
+//Función para crear el popup con los datos del ajax
+function res_create_popup(){
+
+    check_ajax_referer('resdata_seg', 'nonce');
+
+    if( current_user_can('manage_options') ){
+
+        extract( $_POST, EXTR_OVERWRITE );
+
+        if( $tipo == 'create' ){
+
+            if( get_option($nombre) == null ){
+
+                $args[] = array(
+                    'nombre'        => $nombre,
+                    'titulo'        => $titulo,
+                    'subtitulo'     => $subtitulo,
+                    'imagen'        => $imagen,
+                    'texto'         => $texto,
+                    'buttonCheck'   => $buttonCheck,
+                    'buttonTitle'   => $buttonTitle,
+                    'buttonCheck1'  => $buttonCheck1,
+                    'buttonCheck2'  => $buttonCheck2,
+                    'buttonUrl'     => $buttonUrl
+                );
+
+                $data = add_option( $nombre, $args, true );
+                $objeto = get_option( $nombre );
+
+                $json = json_encode([
+                    'data' => $data,
+                    'objeto' => $objeto
+                ]);
+
+            }else if( get_option($nombre) != null ){
+
+                $args[] = array(
+                    'nombre'        => $nombre,
+                    'titulo'        => $titulo,
+                    'subtitulo'     => $subtitulo,
+                    'imagen'        => $imagen,
+                    'texto'         => $texto,
+                    'buttonCheck'   => $buttonCheck,
+                    'buttonTitle'   => $buttonTitle,
+                    'buttonCheck1'  => $buttonCheck1,
+                    'buttonCheck2'  => $buttonCheck2,
+                    'buttonUrl'     => $buttonUrl
+                );
+
+                $data = update_option( $nombre, $args, true );
+                $objeto = get_option( $nombre );
+
+                $json = json_encode([
+                    'data' => $data,
+                    'objeto' => $objeto
+                ]);
+
+            }
+
+        }
+
+        echo $json;
+        wp_die();
+
+    }
+    
+}
+add_action( 'wp_ajax_res_create_popup', 'res_create_popup' );

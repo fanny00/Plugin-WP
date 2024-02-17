@@ -1,4 +1,5 @@
-<?php
+<?php 
+
 /**
- *  Aqui pondremos alguna acción al activar el plugin
+ * Aqui pondremos alguna acción al activar el plugin
  */
