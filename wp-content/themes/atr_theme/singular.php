@@ -24,21 +24,6 @@ get_header(); ?>
                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 texto">
                         <?php 
                         the_content(); 
-
-                        $custom_field = get_post_custom( $post->ID );
-
-                        // var_dump( $custom_field );
-
-                        $helados = $custom_field['Helados'];
-
-                        echo "<ul>";
-                        foreach ($helados as $key => $value) {
-                         //   echo "<li> $value </li>";
-                        }
-                        echo "</ul>";
-                        
-                       // the_meta();
-
                         ?>
                     </div>
 
