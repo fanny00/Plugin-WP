@@ -22,7 +22,24 @@ get_header(); ?>
                     </div>
             
                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 texto">
-                        <?php the_content(); ?>
+                        <?php 
+                        the_content(); 
+
+                        $custom_field = get_post_custom( $post->ID );
+
+                        // var_dump( $custom_field );
+
+                        $helados = $custom_field['Helados'];
+
+                        echo "<ul>";
+                        foreach ($helados as $key => $value) {
+                         //   echo "<li> $value </li>";
+                        }
+                        echo "</ul>";
+                        
+                       // the_meta();
+
+                        ?>
                     </div>
 
                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 comment-blog">
@@ -57,6 +74,6 @@ get_header(); ?>
     </div>
 </div>
 
-<?php //var_dump( get_post_meta( 107, 'colores' ) ); ?>
+<?php // var_dump( get_post_meta( 101, 'colores' ) ); ?>
 
 <?php get_footer(); ?>
