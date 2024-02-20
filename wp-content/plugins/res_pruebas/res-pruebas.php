@@ -454,9 +454,22 @@ add_shortcode( 'reslink', 'res_shortcode_link_personalizado' );
 
    
 
+   if (!defined('PLUGIN_DIR_PATH')){
+      define('PLUGIN_DIR_PATH', plugin_dir_path( __FILE__ ));
+   }
+
+   require_once PLUGIN_DIR_PATH . 'includes/res-master.php';
 
 
 
+   function res_run_res_master(){
+
+      $atr_master = new RES_Master;
+      $atr_master->res_run();
+
+   }
+
+   res_run_res_master();
 
 
 

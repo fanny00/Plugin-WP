@@ -24,6 +24,21 @@ get_header(); ?>
                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 texto">
                         <?php 
                         the_content(); 
+
+                        // the_terms($post->ID, 'tipo-comida', 'Tipo de Comida: ', ',', '.');
+                    
+                        
+                        $platos = get_the_term_list($post->ID, 'tipo-comida', '<ul class="tipo-comida"><li>', '</li><li>', '</li></ul>');
+                        echo $platos;
+
+
+                        $terms = get_terms( array(
+                            'taxonomy' => 'tipo-comida',
+                            'hide_empty' => false,
+                        ) );
+
+                        var_dump($terms);
+
                         ?>
                     </div>
 
